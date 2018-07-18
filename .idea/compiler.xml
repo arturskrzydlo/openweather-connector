@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Annotation profile for OpenWeather Extension" enabled="true">
+        <sourceOutputDir name="target/classes/META-INF" />
+        <sourceTestOutputDir name="target/generated-sources/apt-test" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="extension.version" value="0.0.1" />
+        <processor name="org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor" />
+        <module name="openweather-connector" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="openweather-connector" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

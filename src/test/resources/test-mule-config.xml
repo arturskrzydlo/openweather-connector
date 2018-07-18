@@ -1,0 +1,19 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:openweather="http://www.mulesoft.org/schema/mule/openweather"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+          http://www.mulesoft.org/schema/mule/openweather http://www.mulesoft.org/schema/mule/openweather/current/mule-openweather.xsd">
+
+    <openweather:config name="config" configId="configId">
+        <openweather:connection requiredParameter="aValue" />
+    </openweather:config>
+
+    <flow name="sayHiFlow">
+        <openweather:say-hi person="Mariano Gonzalez"/>
+    </flow>
+
+    <flow name="retrieveInfoFlow">
+        <openweather:retrieve-info config-ref="config"/>
+    </flow>
+
+</mule>
