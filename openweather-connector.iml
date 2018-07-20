@@ -28,7 +28,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20160810" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-validator:commons-validator:1.5.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-digester:commons-digester:1.8.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.mule.runtime:mule-metadata-model-api:1.1.0" level="project" />
+    <or derEntry type="library" scope="PROVIDED" name="Mavengit rm -r --cached node_modules: org.mule.runtime:mule-metadata-model-api:1.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.mule.runtime:api-annotations:1.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.mule.services:mule-service-http:mule-service:1.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0" level="project" />
