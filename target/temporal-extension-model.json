@@ -1,14 +1,14 @@
 {
   "name": "OpenWeather",
   "description": "This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "vendor": "Mulesoft",
   "category": "COMMUNITY",
   "xmlDsl": {
     "prefix": "openweather",
     "namespace": "http://www.mulesoft.org/schema/mule/openweather",
     "schemaLocation": "http://www.mulesoft.org/schema/mule/openweather/current/mule-openweather.xsd",
-    "schemaVersion": "0.0.1",
+    "schemaVersion": "0.0.6",
     "xsdFileName": "mule-openweather.xsd"
   },
   "resources": [],
@@ -152,6 +152,7 @@
                 "password": false,
                 "text": false,
                 "query": false,
+                "order": 2,
                 "tabName": "Advanced"
               },
               "allowedStereotypeModels": [],
@@ -191,8 +192,27 @@
           "executionType": "BLOCKING",
           "output": {
             "type": {
-              "format": "java",
-              "type": "String"
+              "format": "json",
+              "type": "Object",
+              "annotations": {
+                "classInformation": {
+                  "classname": "java.lang.String",
+                  "hasDefaultConstructor": true,
+                  "isInterface": false,
+                  "isInstantiable": true,
+                  "isAbstract": false,
+                  "isFinal": true,
+                  "implementedInterfaces": [
+                    "java.io.Serializable",
+                    "java.lang.Comparable",
+                    "java.lang.CharSequence"
+                  ],
+                  "parent": "",
+                  "genericTypes": [],
+                  "isMap": false
+                }
+              },
+              "fields": []
             },
             "hasDynamicType": false,
             "description": "",
@@ -210,10 +230,11 @@
           "transactional": false,
           "requiresConnection": true,
           "supportsStreaming": false,
+          "notifications": [],
           "nestedComponents": [],
           "errors": [
-            "OPENWEATHER:RETRY_EXHAUSTED",
-            "OPENWEATHER:CONNECTIVITY"
+            "OPENWEATHER:CONNECTIVITY",
+            "OPENWEATHER:RETRY_EXHAUSTED"
           ],
           "stereotype": {
             "type": "PROCESSOR",
@@ -225,10 +246,36 @@
                 {
                   "type": {
                     "format": "java",
-                    "type": "String"
+                    "type": "@ref:org.mule.extension.internal.SlackMessage"
                   },
                   "hasDynamicType": false,
                   "required": false,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "PRIMARY_CONTENT",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": false,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 1
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "message",
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": true,
                   "isConfigOverride": false,
                   "expressionSupport": "SUPPORTED",
                   "role": "BEHAVIOUR",
@@ -241,12 +288,43 @@
                     "password": false,
                     "text": false,
                     "query": false,
-                    "order": 1,
-                    "tabName": "Advanced"
+                    "order": 2
                   },
                   "allowedStereotypeModels": [],
-                  "name": "outputMimeType",
-                  "description": "The mime type of the payload that this operation outputs.",
+                  "name": "city",
+                  "displayModel": {
+                    "example": "Krakow"
+                  },
+                  "description": "",
+                  "modelProperties": {}
+                },
+                {
+                  "type": {
+                    "format": "java",
+                    "type": "String"
+                  },
+                  "hasDynamicType": false,
+                  "required": true,
+                  "isConfigOverride": false,
+                  "expressionSupport": "SUPPORTED",
+                  "role": "BEHAVIOUR",
+                  "dslConfiguration": {
+                    "allowsInlineDefinition": true,
+                    "allowsReferences": true,
+                    "allowTopLevelDefinition": false
+                  },
+                  "layoutModel": {
+                    "password": false,
+                    "text": false,
+                    "query": false,
+                    "order": 3
+                  },
+                  "allowedStereotypeModels": [],
+                  "name": "countryCode",
+                  "displayModel": {
+                    "example": "pl"
+                  },
+                  "description": "",
                   "modelProperties": {}
                 }
               ],
@@ -283,6 +361,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
+                    "order": 4,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -313,6 +392,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
+                    "order": 5,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -325,6 +405,12 @@
                 }
               ],
               "exclusiveParametersModels": [],
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 2
+              },
               "showInDsl": false,
               "name": "Output",
               "description": "",
@@ -451,6 +537,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
+                    "order": 6,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -471,14 +558,23 @@
                 }
               ],
               "exclusiveParametersModels": [],
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 3
+              },
               "showInDsl": false,
               "name": "Connection",
               "description": "",
               "modelProperties": {}
             }
           ],
-          "name": "retrieveInfo",
-          "description": "Example of an operation that uses the configuration and a connection instance to perform some action.",
+          "name": "retrieveCityCurrentWeather",
+          "displayModel": {
+            "displayName": "Current city weather"
+          },
+          "description": "",
           "modelProperties": {},
           "kind": "operation"
         }
@@ -521,51 +617,9 @@
                     "order": 1
                   },
                   "allowedStereotypeModels": [],
-                  "name": "requiredParameter",
-                  "description": "",
-                  "modelProperties": {}
-                },
-                {
-                  "type": {
-                    "format": "java",
-                    "type": "Number",
-                    "annotations": {
-                      "classInformation": {
-                        "classname": "int",
-                        "hasDefaultConstructor": false,
-                        "isInterface": false,
-                        "isInstantiable": false,
-                        "isAbstract": true,
-                        "isFinal": true,
-                        "implementedInterfaces": [],
-                        "parent": "",
-                        "genericTypes": [],
-                        "isMap": false
-                      },
-                      "int": {}
-                    }
-                  },
-                  "hasDynamicType": false,
-                  "required": false,
-                  "isConfigOverride": false,
-                  "expressionSupport": "SUPPORTED",
-                  "defaultValue": "100",
-                  "role": "BEHAVIOUR",
-                  "dslConfiguration": {
-                    "allowsInlineDefinition": true,
-                    "allowsReferences": true,
-                    "allowTopLevelDefinition": false
-                  },
-                  "layoutModel": {
-                    "password": false,
-                    "text": false,
-                    "query": false,
-                    "order": 2
-                  },
-                  "allowedStereotypeModels": [],
-                  "name": "optionalParameter",
+                  "name": "apiToken",
                   "displayModel": {
-                    "displayName": "Friendly Name"
+                    "displayName": "Api token"
                   },
                   "description": "",
                   "modelProperties": {}
@@ -738,6 +792,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
+                    "order": 2,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -946,6 +1001,7 @@
                     "password": false,
                     "text": false,
                     "query": false,
+                    "order": 3,
                     "tabName": "Advanced"
                   },
                   "allowedStereotypeModels": [],
@@ -966,6 +1022,12 @@
                 }
               ],
               "exclusiveParametersModels": [],
+              "layoutModel": {
+                "password": false,
+                "text": false,
+                "query": false,
+                "order": 2
+              },
               "showInDsl": false,
               "name": "Connection",
               "description": "",
@@ -983,206 +1045,135 @@
       "modelProperties": {}
     }
   ],
-  "operations": [
-    {
-      "blocking": true,
-      "executionType": "CPU_LITE",
-      "output": {
-        "type": {
-          "format": "java",
-          "type": "String"
-        },
-        "hasDynamicType": false,
-        "description": "",
-        "modelProperties": {}
-      },
-      "outputAttributes": {
-        "type": {
-          "format": "java",
-          "type": "Void"
-        },
-        "hasDynamicType": false,
-        "description": "",
-        "modelProperties": {}
-      },
-      "transactional": false,
-      "requiresConnection": false,
-      "supportsStreaming": false,
-      "nestedComponents": [],
-      "errors": [],
-      "stereotype": {
-        "type": "PROCESSOR",
-        "namespace": "MULE"
-      },
-      "parameterGroupModels": [
-        {
-          "parameters": [
-            {
-              "type": {
-                "format": "java",
-                "type": "String"
-              },
-              "hasDynamicType": false,
-              "required": true,
-              "isConfigOverride": false,
-              "expressionSupport": "SUPPORTED",
-              "role": "BEHAVIOUR",
-              "dslConfiguration": {
-                "allowsInlineDefinition": true,
-                "allowsReferences": true,
-                "allowTopLevelDefinition": false
-              },
-              "layoutModel": {
-                "password": false,
-                "text": false,
-                "query": false,
-                "order": 1
-              },
-              "allowedStereotypeModels": [],
-              "name": "person",
-              "description": "",
-              "modelProperties": {}
-            },
-            {
-              "type": {
-                "format": "java",
-                "type": "String"
-              },
-              "hasDynamicType": false,
-              "required": false,
-              "isConfigOverride": false,
-              "expressionSupport": "SUPPORTED",
-              "role": "BEHAVIOUR",
-              "dslConfiguration": {
-                "allowsInlineDefinition": true,
-                "allowsReferences": true,
-                "allowTopLevelDefinition": false
-              },
-              "layoutModel": {
-                "password": false,
-                "text": false,
-                "query": false,
-                "order": 2,
-                "tabName": "Advanced"
-              },
-              "allowedStereotypeModels": [],
-              "name": "outputMimeType",
-              "description": "The mime type of the payload that this operation outputs.",
-              "modelProperties": {}
-            }
-          ],
-          "exclusiveParametersModels": [],
-          "layoutModel": {
-            "password": false,
-            "text": false,
-            "query": false,
-            "order": 1
-          },
-          "showInDsl": false,
-          "name": "General",
-          "description": "",
-          "modelProperties": {}
-        },
-        {
-          "parameters": [
-            {
-              "type": {
-                "format": "java",
-                "type": "String"
-              },
-              "hasDynamicType": false,
-              "required": false,
-              "isConfigOverride": false,
-              "expressionSupport": "NOT_SUPPORTED",
-              "role": "BEHAVIOUR",
-              "dslConfiguration": {
-                "allowsInlineDefinition": true,
-                "allowsReferences": true,
-                "allowTopLevelDefinition": false
-              },
-              "layoutModel": {
-                "password": false,
-                "text": false,
-                "query": false,
-                "tabName": "Advanced"
-              },
-              "allowedStereotypeModels": [],
-              "name": "target",
-              "displayModel": {
-                "displayName": "Target Variable"
-              },
-              "description": "The name of a variable on which the operation\u0027s output will be placed",
-              "modelProperties": {}
-            },
-            {
-              "type": {
-                "format": "java",
-                "type": "String"
-              },
-              "hasDynamicType": false,
-              "required": false,
-              "isConfigOverride": false,
-              "expressionSupport": "REQUIRED",
-              "defaultValue": "#[payload]",
-              "role": "BEHAVIOUR",
-              "dslConfiguration": {
-                "allowsInlineDefinition": true,
-                "allowsReferences": true,
-                "allowTopLevelDefinition": false
-              },
-              "layoutModel": {
-                "password": false,
-                "text": false,
-                "query": false,
-                "tabName": "Advanced"
-              },
-              "allowedStereotypeModels": [],
-              "name": "targetValue",
-              "displayModel": {
-                "displayName": "Target Value"
-              },
-              "description": "An expression that will be evaluated against the operation\u0027s output and the outcome of that expression will be stored in the target variable",
-              "modelProperties": {}
-            }
-          ],
-          "exclusiveParametersModels": [],
-          "showInDsl": false,
-          "name": "Output",
-          "description": "",
-          "modelProperties": {}
-        }
-      ],
-      "name": "sayHi",
-      "description": "Example of a simple operation that receives a string parameter and returns a new string message that will be set on the payload.",
-      "modelProperties": {},
-      "kind": "operation"
-    }
-  ],
+  "operations": [],
   "functions": [],
   "constructs": [],
   "connectionProviders": [],
   "messageSources": [],
+  "notifications": [],
   "errors": [
     {
-      "error": "MULE:CONNECTIVITY",
-      "parent": "MULE:ANY"
+      "error": "OPENWEATHER:CONNECTIVITY",
+      "parent": "MULE:CONNECTIVITY",
+      "handleable": true
     },
     {
-      "error": "MULE:ANY"
+      "error": "MULE:CONNECTIVITY",
+      "parent": "MULE:ANY",
+      "handleable": true
+    },
+    {
+      "error": "MULE:ANY",
+      "handleable": true
     },
     {
       "error": "MULE:RETRY_EXHAUSTED",
-      "parent": "MULE:ANY"
+      "parent": "MULE:ANY",
+      "handleable": true
     },
     {
       "error": "OPENWEATHER:RETRY_EXHAUSTED",
-      "parent": "MULE:RETRY_EXHAUSTED"
-    },
-    {
-      "error": "OPENWEATHER:CONNECTIVITY",
-      "parent": "MULE:CONNECTIVITY"
+      "parent": "MULE:RETRY_EXHAUSTED",
+      "handleable": true
     }
   ],
   "modelProperties": {},
-  "types": []
+  "types": [
+    {
+      "format": "java",
+      "type": "Object",
+      "annotations": {
+        "typeId": "org.mule.extension.internal.SlackMessage",
+        "classInformation": {
+          "classname": "org.mule.extension.internal.SlackMessage",
+          "hasDefaultConstructor": true,
+          "isInterface": false,
+          "isInstantiable": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "implementedInterfaces": [],
+          "parent": "",
+          "genericTypes": [],
+          "isMap": false
+        },
+        "typeAlias": {
+          "value": "SlackMessage"
+        }
+      },
+      "fields": [
+        {
+          "key": {
+            "name": "channel"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "client_msg_id"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "event_ts"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "source_team"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "team"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "text"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "ts"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "type"
+          },
+          "model": {
+            "type": "String"
+          }
+        },
+        {
+          "key": {
+            "name": "user"
+          },
+          "model": {
+            "type": "String"
+          }
+        }
+      ]
+    }
+  ]
 }

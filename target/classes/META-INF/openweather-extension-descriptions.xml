@@ -17,10 +17,7 @@
         <connection name="connection">
             <description><![CDATA[]]></description>
             <parameters>
-                <parameter name="requiredParameter">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="optionalParameter">
+                <parameter name="apiToken">
                     <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="reconnection">
@@ -37,11 +34,17 @@
         <parameters/>
     </extension>
     <operations>
-        <operation name="retrieveInfo">
-            <description><![CDATA[Example of an operation that uses the configuration and a connection instance to perform some action.]]></description>
+        <operation name="retrieveCityCurrentWeather">
+            <description><![CDATA[]]></description>
             <parameters>
-                <parameter name="outputMimeType">
-                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
+                <parameter name="message">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="city">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="countryCode">
+                    <description><![CDATA[]]></description>
                 </parameter>
                 <parameter name="target">
                     <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
@@ -54,23 +57,40 @@
                 </parameter>
             </parameters>
         </operation>
-        <operation name="sayHi">
-            <description><![CDATA[Example of a simple operation that receives a string parameter and returns a new string message that will be set on the payload.]]></description>
-            <parameters>
-                <parameter name="person">
-                    <description><![CDATA[]]></description>
-                </parameter>
-                <parameter name="outputMimeType">
-                    <description><![CDATA[The mime type of the payload that this operation outputs.]]></description>
-                </parameter>
-                <parameter name="target">
-                    <description><![CDATA[The name of a variable on which the operation's output will be placed]]></description>
-                </parameter>
-                <parameter name="targetValue">
-                    <description><![CDATA[An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable]]></description>
-                </parameter>
-            </parameters>
-        </operation>
     </operations>
     <sources/>
+    <types>
+        <type name="org.mule.extension.internal.SlackMessage">
+            <description><![CDATA[]]></description>
+            <parameters>
+                <parameter name="channel">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="client_msg_id">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="event_ts">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="source_team">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="team">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="text">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="ts">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="type">
+                    <description><![CDATA[]]></description>
+                </parameter>
+                <parameter name="user">
+                    <description><![CDATA[]]></description>
+                </parameter>
+            </parameters>
+        </type>
+    </types>
 </extension-documentation>
