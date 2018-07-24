@@ -9,6 +9,7 @@ import org.mule.extension.internal.utils.UnixTimestampDeserializer;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,6 +18,11 @@ public class WeatherResource implements Serializable {
     private Double temperature;
     private Double pressure;
     private Integer humidity;
+    private String weatherDesc;
+    private String weatherMain;
+    private String weatherIcon;
+    private String name;
+
 
     @JsonProperty("dt")
     @JsonDeserialize(using = UnixTimestampDeserializer.class)
@@ -24,10 +30,18 @@ public class WeatherResource implements Serializable {
     private LocalDateTime date;
 
     @JsonProperty("main")
-    private void unpackNested(Map<String, String> main) {
+    private void unpackNestedMain(Map<String, String> main) {
         this.temperature = Double.valueOf(main.get("temp"));
         this.pressure = Double.valueOf(main.get("pressure"));
         this.humidity = Integer.valueOf(main.get("humidity"));
+    }
+
+    @JsonProperty("weather")
+    private void unpackNestedWeather(List<Map<String, String>> weather){
+        Map<String, String> weatherAttributes = weather.get(0);
+        this.weatherDesc = weatherAttributes.get("description");
+        this.weatherMain = weatherAttributes.get("main");
+        this.weatherIcon = weatherAttributes.get("icon");
     }
 
     public Double getTemperature() {
@@ -44,6 +58,22 @@ public class WeatherResource implements Serializable {
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public String getWeatherDesc() {
+        return weatherDesc;
+    }
+
+    public String getWeatherMain() {
+        return weatherMain;
+    }
+
+    public String getWeatherIcon() {
+        return weatherIcon;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

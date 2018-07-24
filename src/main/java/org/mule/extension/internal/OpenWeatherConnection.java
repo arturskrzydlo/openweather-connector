@@ -17,7 +17,7 @@ import static org.mule.runtime.http.api.HttpConstants.Method.GET;
 public final class OpenWeatherConnection {
 
     private static final String API_URI = "https://api.openweathermap.org/data";
-    private static final String CITY_CURRENT_WEATHER_URL = "/2.5/weather?q={city},{countryCode}&appid={apiToken}";
+    private static final String CITY_CURRENT_WEATHER_URL = "/2.5/weather?q={cityAndCountryCode}&units=metric&appid={apiToken}";
 
     private final String apiToken;
     private HttpClient httpClient;
@@ -31,9 +31,12 @@ public final class OpenWeatherConnection {
 
     public HttpResponse getCurrentWeather(City city) throws IOException, TimeoutException {
 
+        final String cityAndCountryCode = city.getName()
+                + (city.getCountryCode().isEmpty() ? "" : "," + city.getCountryCode());
+
         String uri = UriComponentsBuilder.fromHttpUrl(API_URI)
                 .path(CITY_CURRENT_WEATHER_URL)
-                .buildAndExpand(city.getName(), city.getCountryCode(), apiToken)
+                .buildAndExpand(cityAndCountryCode, apiToken)
                 .toUriString();
 
         return httpClient.send(HttpRequest.builder()
